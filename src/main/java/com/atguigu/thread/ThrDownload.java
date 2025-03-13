@@ -1,4 +1,4 @@
-package com.atguigu.Thread;
+package com.atguigu.thread;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +18,15 @@ public class ThrDownload extends Thread {
     private long finish; //本线程应该下载的总字节数
     private volatile boolean running = true;
 
-    public ThrDownload(final int no, final long fileLen, final long numThread, final boolean isPart,
-                       final long[] startParts, final String urlName, final String saveName, final int bufLen) {
+    /*
+     *初始化：通过构造函数传入参数，包括线程号、文件总长度、线程数量、是否为已下载、
+     * 已拆分的起始位置数组、下载链接、保存文件名和读写缓冲区大小。根据参数计算出每个线程的下载范围，
+     * 并打开连接、输入流和输出流
+     * */
+    public ThrDownload(final int no, final long fileLen,
+                       final long numThread, final boolean isPart,
+                       final long[] startParts, final String urlName,
+                       final String saveName, final int bufLen) {
         this.no = no;
         long blockLen = fileLen / numThread;
 

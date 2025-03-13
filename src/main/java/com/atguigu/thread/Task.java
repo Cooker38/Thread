@@ -1,4 +1,4 @@
-package com.atguigu.Thread;
+package com.atguigu.thread;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,7 +10,7 @@ public class Task {
     public int numThread = 0; //线程数
     public String urlName; //下载的url
     public String saveName; //保存的文件路径
-    public ThrDownload[] thrDownloads; //线程实力
+    public ThrDownload[] thrDownloads; //线程数组
     public ThrCount thrCount; //统计线程
     public boolean isPart = false; //是否已经下载了部分(断点续传)
     public long[] startParts; //断点续传后每个线程的开始位置
@@ -22,7 +22,8 @@ public class Task {
         this.dialog = dialog;
     }
 
-    public boolean init(final String urlName,final String saveName,final int numThread,final boolean isPart){
+    public boolean init(final String urlName,final String saveName,
+                        final int numThread,final boolean isPart){
         this.isPart = isPart;
         this.urlName = urlName;
         this.saveName = saveName;
@@ -41,13 +42,17 @@ public class Task {
 
         this.thrDownloads = new ThrDownload[numThread];
         for(int i = 0;i<numThread;i++)
-            thrDownloads[i] = new ThrDownload(i,fileLen,numThread,isPart,startParts,urlName,saveName,bufLen);
+            thrDownloads[i] = new ThrDownload(i,fileLen,numThread,isPart,
+                    startParts,urlName,saveName,bufLen);
         this.thrCount = new ThrCount(this);
         return true;
     }
 
     //断点续传
-    public boolean initContinue(final String urlName,final String saveName,final int numThread,final long[] startParts,final boolean isPart){
+    public boolean initContinue(final String urlName,
+                                final String saveName,
+                                final int numThread,
+                                final long[] startParts,final boolean isPart){
         this.startParts = startParts;
         this.isPart = true;
         return this.init(urlName,saveName,numThread,isPart);
