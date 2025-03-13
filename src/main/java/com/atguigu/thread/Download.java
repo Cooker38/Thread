@@ -1,4 +1,4 @@
-package com.atguigu.Thread;
+package com.atguigu.thread;
 
 import javax.swing.*;
 import java.awt.*;
